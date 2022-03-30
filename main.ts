@@ -1,3 +1,5 @@
+let y_j = 0
+let x_j = 0
 let hero = game.createSprite(2, 2)
 let food = game.createSprite(4, 4)
 let ghost = game.createSprite(0, 0)
@@ -6,6 +8,8 @@ ghost.set(LedSpriteProperty.Brightness, 10)
 food.set(LedSpriteProperty.Brightness, 5)
 while (true) {
     basic.pause(400)
+    x_j = pins.analogReadPin(AnalogPin.P0)
+    y_j = pins.analogReadPin(AnalogPin.P1)
     if (ghost.get(LedSpriteProperty.X) < hero.get(LedSpriteProperty.X)) {
         ghost.change(LedSpriteProperty.X, 1)
     } else if (ghost.get(LedSpriteProperty.X) > hero.get(LedSpriteProperty.X)) {
@@ -15,14 +19,14 @@ while (true) {
     } else if (ghost.get(LedSpriteProperty.Y) > hero.get(LedSpriteProperty.Y)) {
         ghost.change(LedSpriteProperty.Y, -1)
     }
-    if (input.acceleration(Dimension.X) > 200) {
+    if (x_j > 823) {
         hero.change(LedSpriteProperty.X, 1)
-    } else if (input.acceleration(Dimension.X) < -200) {
+    } else if (x_j < 200) {
         hero.change(LedSpriteProperty.X, -1)
     }
-    if (input.acceleration(Dimension.Y) > 200) {
+    if (y_j > 823) {
         hero.change(LedSpriteProperty.Y, 1)
-    } else if (input.acceleration(Dimension.Y) < -200) {
+    } else if (y_j < 200) {
         hero.change(LedSpriteProperty.Y, -1)
     }
     if (hero.isTouching(food)) {
